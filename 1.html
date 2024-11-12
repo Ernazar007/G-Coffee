@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кофейня "G Coffee"</title>
+    <link rel="stylesheet" href="1.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan Script">
+    <script>
+        const menu = {
+            "Эспрессо": { price: 550, img: "images/espresso.jpg" },
+            "Капучино": { price: 700, img: "images/cappuccino.jpg" },
+            "Латте": { price: 800, img: "images/latte.jpg" },
+            "Американо": { price: 500, img: "images/americano.jpg" },
+            "Мокаччино": { price: 800, img: "images/mochaccino.jpg" },
+            "Чизкейк": { price: 950, img: "images/cheesecake.jpg" },
+            "Круассан": { price: 600, img: "images/croissant.jpg" },
+            "Торт Наполеон": { price: 900, img: "images/croissant.jpg" },
+            "Торт Сникерс": { price: 950, img: "images/croissant.jpg" },
+        };
+
+        function addToOrder(item) {
+            const orderList = document.getElementById('order-list');
+            const total = document.getElementById('total-price');
+            const li = document.createElement('li');
+            li.textContent = item + " — " + menu[item].price + " тг";
+            orderList.appendChild(li);
+
+            let totalPrice = parseInt(total.textContent);
+            totalPrice += menu[item].price;
+            total.textContent = totalPrice;
+
+            showConfirmation(item);
+        }
+
+        function clearOrder() {
+            const orderList = document.getElementById('order-list');
+            const total = document.getElementById('total-price');
+            orderList.innerHTML = "";
+            total.textContent = 0;
+        }
+
+        function showConfirmation(item) {
+            const confirmation = document.getElementById('confirmation');
+            confirmation.textContent = item + " добавлен в заказ!";
+            confirmation.style.display = 'block';
+
+            setTimeout(() => {
+                confirmation.style.display = 'none';
+            }, 2000);
+        }
+
+       
+            function calculateFinalPrice() {
+    const total = parseInt(document.getElementById('total-price').textContent);
+    const isStudent = document.getElementById('student-discount').checked;
+    let discount = 0;
+    if (isStudent) {
+        discount = total * 0.05;
+    }
+    document.getElementById('discount').textContent = discount.toFixed(2) + " тг";
+    const discountedTotal = total - discount;
+    const tips = discountedTotal * 0.1;
+    const finalPrice = discountedTotal + tips;
+    document.getElementById('tips').textContent = tips.toFixed(2) + " тг";
+    document.getElementById('final-price').textContent = finalPrice.toFixed(2) + " тг";
+}
+
+        
+
+        function submitFeedback() {
+            const feedback = document.getElementById('feedback').value;
+            const feedbackList = document.getElementById('feedback-list');
+            const li = document.createElement('li');
+            li.textContent = feedback;
+            feedbackList.appendChild(li);
+            document.getElementById('feedback').value = '';
+
+            alert("Спасибо за ваш отзыв!");
+        }
+
+        function confirmOrder() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            if (name && phone && address) {
+                alert(`Спасибо за ваш заказ, ${name}! Ваш заказ будет доставлен по адресу: ${address}. Мы свяжемся с вами по номеру: ${phone}.`);
+                clearOrder();
+            } else {
+                alert("Пожалуйста, заполните все поля для оформления заказа.");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>G Coffee</h1>
+        <p>Лучшее место для ароматного кофе</p>
+    </header>
+
+    <nav>
+        <a href="#about">О нас</a>
+        <a href="#menu">Меню</a>
+        <a href="#order">Заказ</a>
+        <a href="#feedback-section">Отзывы</a>
+        <a href="#contacts">Контакты</a>
+    </nav>
+
+    <main>
+        
+        <section id="about" class="center about-section">
+            <h2>О нас</h2>
+            <p>Кофейня "G Coffee" — это уютное место для настоящих ценителей кофе. Мы гордимся тем, что используем только высококачественные зерна и предлагаем разнообразие напитков и десертов, чтобы каждый наш гость мог насладиться идеальной чашкой кофе.</p>
+        </section>
+        
+
+        <section id="menu" class="center">
+            <h2>Меню</h2>
+            <div class="menu-container">
+                <div class="menu-item">
+                    <img src="1.png" alt="Эспрессо">
+                    <h3>Эспрессо</h3>
+                    <p>Крепкий и насыщенный напиток, идеальный для бодрого начала дня.</p>
+                    <button onclick="addToOrder('Эспрессо')">Добавить в заказ — 550 тг</button>
+                </div>
+                <div class="menu-item">
+                    <img src="2.jpg" alt="Капучино">
+                    <h3>Капучино</h3>
+                    <p>Нежный кофейный напиток с добавлением молочной пены.</p>
+                    <button onclick="addToOrder('Капучино')">Добавить в заказ — 700 тг</button>
+                </div>
+                <div class="menu-item">
+                    <img src="3.webp" alt="Латте">
+                    <h3>Латте</h3>
+                    <p>Мягкий напиток на основе эспрессо с молоком.</p>
+                    <button onclick="addToOrder('Латте')">Добавить в заказ — 800 тг</button>
+                </div>
+                <div class="menu-item">
+                    
+                    <img src="4.webp" alt="Американо">
+                    <h3>Американо</h3>
+                    <p>Разбавленный эспрессо для тех, кто любит более мягкий вкус.</p>
+                    <button onclick="addToOrder('Американо')">Добавить в заказ — 500 тг</button>
+                </div>
+                <div class="menu-item">
+                    <img src="5.jfif" alt="Мокаччино">
+                    <h3>Мокаччино</h3>
+                    <p>Шоколадный вариант капучино с густой пеной.</p>
+                    <button onclick="addToOrder('Мокаччино')">Добавить в заказ — 800 тг</button>
+                </div>
+                <div class="menu-item">
+                    <img src="6.webp" alt="Чизкейк">
+                    <h3>Чизкейк</h3>
+                    <p>Вкуснейший десерт с кремовой текстурой и хрустящей основой.</p>
+                    <button onclick="addToOrder('Чизкейк')">Добавить в заказ — 950 тг</button>
+                </div>
+                <div class="menu-item">
+                    <img src="7.jpg" alt="Круассан">
+                    <h3>Круассан</h3>
+                    <p>Хрустящий французский круассан с мягкой начинкой.</p>
+                    <button onclick="addToOrder('Круассан')">Добавить в заказ — 600 тг</button>
+                    </div>
+                    <div class="menu-item">
+                    <img src="9.jfif" alt="Наполеон">
+                    <h3>Торт Наполеон</h3>
+                    <p>Cлоеное тесто с кремом создаст гармонию текстур и вкусов.</p>
+                    <button onclick="addToOrder('Торт Наполеон')">Добавить в заказ — 900 тг</button>
+                    </div>
+                    <div class="menu-item">
+                        <img src="10.jpg" alt="">
+                        <h3>Торт Сникерс</h3>
+                        <p>это вкусный десерт, который имитирует вкус знаменитого шоколадного батончика Snickers.</p>
+                        <button onclick="addToOrder('Торт Сникерс')">Добавить в заказ — 950 тг</button>
+
+                </div>
+              
+            </div>
+        </section>
+        
+
+
+        <div id="confirmation" style="display: none; background-color: #90ee90; padding: 10px; margin: 10px 0; text-align: center;">
+       
+        </div>
+
+       
+        <section id="order" class="center order-section">
+            <h2>Ваш заказ</h2>
+            <ul id="order-list"></ul>
+            <p>Итого: <span id="total-price">0</span> тг</p>
+
+            <label>
+                <input type="checkbox" id="student-discount"> Я студент (5% скидка)
+            </label>
+            
+            <p>Обслуживание (10%): <span id="tips">0</span> </p>
+            <p>Скидка: <span id="discount">0</span> </p>
+            <p>Итоговый цена: <span id="final-price">0</span></p>
+            <button onclick="clearOrder()">Очистить заказ</button>
+            <button onclick="calculateFinalPrice()">Рассчитать итоговую стоимость</button>
+        </section>
+        
+
+
+        <section id="checkout" class="center">
+            <h2>Оформление заказа</h2>
+            <label for="name">Имя:</label><br>
+            <input type="text" id="name" placeholder="Введите ваше имя"><br><br>
+            <label for="phone">Телефон:</label><br>
+            <input type="text" id="phone" placeholder="Введите ваш телефон"><br><br>
+            <label for="address">Адрес доставки:</label><br>
+            <textarea id="address" placeholder="Введите ваш адрес"></textarea><br><br>
+            <button onclick="confirmOrder()">Подтвердить заказ</button>
+        </section>
+
+
+        <section id="feedback-section" class="center">
+            <h2>Отзывы</h2>
+            <textarea id="feedback" placeholder="Оставьте свой отзыв здесь..." rows="4" cols="50"></textarea>
+            
+            <button onclick="submitFeedback()">Отправить отзыв</button>
+            <ul id="feedback-list"></ul>
+        </section>
+
+        <section id="contacts" class="center">
+            <h2>Контакты</h2>
+            <p>Адрес: г. Уральск</p>
+            <p>Телефон: +7 (727) 155 95 87</p>
+            <p>Email: info@Gcoffee.kz</p>
+            <p>Часы работы: с 09:00 до 21:00 каждый день</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 G Coffee</p>
+    </footer>
+
+</body>
+</html>
